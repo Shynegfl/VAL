@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Invitation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FFE6E6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            background-color: #FFC0CB;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #FF69B4;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #FF1493;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            background-color: #FF69B4;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        button:hover {
+            background-color: #FF1493;
+            transform: scale(1.05);
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        #celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 192, 203, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #celebration h2 {
+            color: #FF1493;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    <div class="container">
+        <h1>Be My Valentine?</h1>
+        <p>Would you like to go on a special date with me?</p>
+        <div class="buttons">
+            <button onclick="respond('Yes')">Yes</button>
+            <button onclick="respond('Maybe')">Maybe</button>
+            <button onclick="respond('Sure')">Sure</button>
+        </div>
+    </div>
+
+    <div id="celebration">
+        <h2>OMG YAY! 🎉</h2>
+        <p id="response-message"></p>
+    </div>
+
+    <script>
+        function respond(answer) {
+            document.getElementById('response-message').innerText = `You chose: ${answer}! 💖`;
+            document.getElementById('celebration').style.display = 'flex';
+            createCelebrationHearts();
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            heart.innerText = '💖';
+            heart.style.fontSize = Math.random() * 20 + 10 + "px";
+            heart.style.position = 'absolute';
+            heart.style.top = '-20px';
+            heart.style.animation = 'fall linear forwards';
+            document.querySelector('.hearts').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        function createCelebrationHearts() {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = '💖';
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = Math.random() * 100 + "vh";
+                heart.style.fontSize = Math.random() * 30 + 10 + "px";
+                heart.style.animationDuration = Math.random() * 2 + 2 + "s";
+                document.getElementById('celebration').appendChild(heart);
+            }
+        }
+
+        setInterval(createHeart, 300);
+
+        document.styleSheets[0].insertRule(`
+            @keyframes fall {
+                to {
+                    transform: translateY(105vh);
+                }
+            }
+        `, document.styleSheets[0].cssRules.length);
+    </script>
+</body>
+</html>
